@@ -1,7 +1,8 @@
-public class SchedulingQueue {
+public class SchedulingQueue implements Queue<Task> {
     private TaskNode root;
     private TaskNode last;
 
+    @Override
     public void enqueue(Task task) {
         if (this.isEmpty()) {
             root = new TaskNode(task);
@@ -12,6 +13,7 @@ public class SchedulingQueue {
         }
     }
 
+    @Override
     public Task dequeue() {
         if (this.isEmpty()) return null;
         Task task = root.getJob();
@@ -19,11 +21,13 @@ public class SchedulingQueue {
         return task;
     }
 
+    @Override
     public Task front() {
         if (this.isEmpty()) return null;
         return root.getJob();
     }
 
+    @Override
     public boolean isEmpty() {
         return root == null;
     }
