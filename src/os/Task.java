@@ -1,4 +1,4 @@
-package cmp426;
+package os;
 
 public class Task {
     private final String PID;

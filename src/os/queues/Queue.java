@@ -1,4 +1,4 @@
-package cmp426.queues;
+package os.queues;
 
 public interface Queue<T> {
     void enqueue(T t);

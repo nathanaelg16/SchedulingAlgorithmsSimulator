@@ -1,6 +1,6 @@
-package cmp426.queues;
+package os.queues;
 
-import cmp426.Task;
+import os.Task;
 
 public class PrioritySchedulingQueue implements Queue<Task> {
     private static final int MAX_SIZE = 1024;

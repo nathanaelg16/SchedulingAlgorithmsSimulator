@@ -1,8 +1,8 @@
-package cmp426;
+package os;
 
-import cmp426.schedulers.RoundRobinScheduler;
-import cmp426.schedulers.Scheduler;
-import cmp426.schedulers.ShortestJobFirstScheduler;
+import os.schedulers.RoundRobinScheduler;
+import os.schedulers.Scheduler;
+import os.schedulers.ShortestJobFirstScheduler;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.Comparator;
 import java.util.Scanner;
 
 public class Driver {
-    private final static long DELAY = 100;
+    private final static long DELAY = 1000;
 
     public static void main(String[] args) throws InterruptedException {
         ArrayList<Task> RRTaskList = new ArrayList<>();
@@ -24,8 +24,12 @@ public class Driver {
         try (Scanner reader = new Scanner(file)) {
             while (reader.hasNextLine()) {
                 String[] taskData = reader.nextLine().split(" ");
-                RRTaskList.add(new Task(taskData[0], Integer.parseInt(taskData[1]), Integer.parseInt(taskData[2])));
-                SJFTaskList.add(new Task(taskData[0], Integer.parseInt(taskData[1]), Integer.parseInt(taskData[2])));
+                String PID = taskData[0];
+                int arrivalTime = Integer.parseInt(taskData[1]);
+                int burstTime = Integer.parseInt(taskData[2]);
+                if (arrivalTime < 0 || burstTime < 0) throw new IllegalArgumentException("Illegal Argument: Negative value received.");
+                RRTaskList.add(new Task(PID, arrivalTime, burstTime));
+                SJFTaskList.add(new Task(PID, arrivalTime, burstTime));
             }
         } catch (Exception e) {
             System.err.println(e.getMessage());

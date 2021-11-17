@@ -1,4 +1,4 @@
-package cmp426;
+package os;
 
 public class CPU {
     private Task runningTask;
@@ -32,7 +32,7 @@ public class CPU {
 
     private void print(Task t) {
         if (this.time == 0) return;
-        if (t == null) System.out.println("idle");
+        if (t == null) System.out.printf("[%d-%d]\tidle\n", this.time, this.time);
         else System.out.printf("[%d-%d]\t%s running\n", this.start, this.time, t.getPID());
     }
 

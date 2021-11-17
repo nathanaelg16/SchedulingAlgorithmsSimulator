@@ -1,8 +1,8 @@
-package cmp426.schedulers;
+package os.schedulers;
 
-import cmp426.CPU;
-import cmp426.Task;
-import cmp426.queues.PrioritySchedulingQueue;
+import os.CPU;
+import os.Task;
+import os.queues.PrioritySchedulingQueue;
 
 import java.util.ArrayList;
 
@@ -14,12 +14,13 @@ public class ShortestJobFirstScheduler extends Scheduler {
 
     @Override
     public void schedule() {
-        this.cpu.run(this.pickNextTask());
+        if (!this.queue.isEmpty()) this.cpu.run(this.pickNextTask());
+        else this.cpu.run(null);
     }
 
     @Override
     public void run() {
-        if (cpu.isIdle()) this.schedule();
+        if (this.cpu.isIdle()) this.schedule();
     }
 
 

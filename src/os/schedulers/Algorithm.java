@@ -1,6 +1,6 @@
-package cmp426.schedulers;
+package os.schedulers;
 
-import cmp426.Task;
+import os.Task;
 
 public interface Algorithm {
     void schedule();

@@ -1,8 +1,8 @@
-package cmp426.schedulers;
+package os.schedulers;
 
-import cmp426.CPU;
-import cmp426.Task;
-import cmp426.queues.SchedulingQueue;
+import os.CPU;
+import os.Task;
+import os.queues.SchedulingQueue;
 
 import java.util.ArrayList;
 
