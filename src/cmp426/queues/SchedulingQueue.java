@@ -1,3 +1,7 @@
+package cmp426.queues;
+
+import cmp426.Task;
+
 public class SchedulingQueue implements Queue<Task> {
     private TaskNode root;
     private TaskNode last;

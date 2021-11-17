@@ -1,10 +1,16 @@
+package cmp426;
+
+import cmp426.schedulers.RoundRobinScheduler;
+import cmp426.schedulers.Scheduler;
+import cmp426.schedulers.ShortestJobFirstScheduler;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Scanner;
 
 public class Driver {
-    private final static long DELAY = 1000;
+    private final static long DELAY = 100;
 
     public static void main(String[] args) throws InterruptedException {
         ArrayList<Task> RRTaskList = new ArrayList<>();
@@ -24,35 +30,40 @@ public class Driver {
         } catch (Exception e) {
             System.err.println(e.getMessage());
             System.err.println("Please make sure the path to your text file is correct and the file is correctly formatted.");
+            System.exit(1);
         }
 
-
         CPU cpu = new CPU();
-        simulateRoundRobin(cpu, RRTaskList, timeQuantum);
         simulateShortestJobFirst(cpu, SJFTaskList);
-        System.out.println("\n\n------------------------------------------\n\tProject done by Nathanael Gutierrez\n------------------------------------------\n");
+        simulateRoundRobin(cpu, RRTaskList, timeQuantum);
+        System.out.println("\n------------------------------------------\n\tProject done by Nathanael Gutierrez\n------------------------------------------\n");
     }
 
-    private static void simulateShortestJobFirst(CPU cpu, ArrayList<Task> taskList) {
-        // TODO IMPLEMENTATION
-    }
-
-    private static void simulateRoundRobin(CPU cpu, ArrayList<Task> taskList, int timeQuantum) throws InterruptedException {
-        System.out.println("------------------------------------------\n\t\tRound Robin Scheduling\n------------------------------------------\n");
-
-        RoundRobin rr = new RoundRobin(cpu, taskList, timeQuantum);
-
+    private static void simulateScheduler(CPU cpu, ArrayList<Task> taskList, Scheduler scheduler) throws InterruptedException {
+        cpu.reset();
         do {
-            rr.tick();
+            scheduler.tick();
             cpu.tick();
             Thread.sleep(DELAY);
-        } while (!rr.shouldExit() || !cpu.isIdle());
+        } while (!scheduler.shouldExit() || !cpu.isIdle());
         cpu.terminate();
         printStatistics(taskList);
     }
 
+    private static void simulateShortestJobFirst(CPU cpu, ArrayList<Task> taskList) throws InterruptedException {
+        System.out.println("\n------------------------------------------\n\t\tShortest Job First Scheduling\n------------------------------------------\n");
+        ShortestJobFirstScheduler sjf = new ShortestJobFirstScheduler(cpu, taskList);
+        simulateScheduler(cpu, taskList, sjf);
+    }
+
+    private static void simulateRoundRobin(CPU cpu, ArrayList<Task> taskList, int timeQuantum) throws InterruptedException {
+        System.out.println("\n------------------------------------------\n\t\tRound Robin Scheduling\n------------------------------------------\n");
+        RoundRobinScheduler rr = new RoundRobinScheduler(cpu, taskList, timeQuantum);
+        simulateScheduler(cpu, taskList, rr);
+    }
+
     private static void printStatistics(ArrayList<Task> taskList) {
-        taskList.sort(Comparator.comparing(Task::getPID));
+        taskList.sort(Comparator.comparing(Task::getArrivalTime));
         class Statistics {
             final String PID;
             final int turnaround;
@@ -88,8 +99,8 @@ public class Driver {
         for (Statistics statistic : statistics) {
             System.out.printf("\t%s = %d\n", statistic.PID, statistic.response);
         }
-        double numStatistics = (double) taskList.size();
-        System.out.printf("\nAverage turnaround time: %.2f\nAverage wait time: %.2f\nAverage response time: %.2f",
+        double numStatistics = taskList.size();
+        System.out.printf("\nAverage turnaround time: %.2f\nAverage wait time: %.2f\nAverage response time: %.2f\n",
                 totalTurnaround / numStatistics, totalWait / numStatistics, totalResponse / numStatistics);
     }
 }

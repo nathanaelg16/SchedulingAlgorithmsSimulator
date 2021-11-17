@@ -1,3 +1,5 @@
+package cmp426;
+
 public class CPU {
     private Task runningTask;
     private int start;
@@ -46,10 +48,14 @@ public class CPU {
     }
 
     private void initialize() {
-        System.out.println("------------------------------------------\n\t\tCPU Scheduling Simulation\n------------------------------------------\n");
+        System.out.println("------------------------------------------\n\t\tCPU Scheduling Simulation\n------------------------------------------");
     }
 
     public void terminate() {
         this.run(null);
+    }
+
+    public void reset() {
+        this.time = 0;
     }
 }

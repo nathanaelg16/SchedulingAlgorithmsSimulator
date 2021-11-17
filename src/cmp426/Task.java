@@ -1,3 +1,5 @@
+package cmp426;
+
 public class Task {
     private final String PID;
     private final int arrivalTime;
@@ -60,4 +62,5 @@ public class Task {
     public boolean hasResponded() {
         return this.responded;
     }
+
 }
