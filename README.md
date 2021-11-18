@@ -1,9 +1,11 @@
 # Scheduling Algorithms Simulator
 
 ---
+
 This simulator was created for my CMP 426 - Operating Systems project.
 It simulates the execution of tasks on the CPU with varying scheduling 
 algorithms in real time.
+
 ---
 ## How to run
 To run this program from the command line, first compile with `javac`,
@@ -41,7 +43,7 @@ a third argument to the program with the amount of time (in milliseconds) that a
 java os/Driver ./input.txt 2 500
 ```
 
-The above example will cause each simulation second to last 0.5 real seconds (or 500 milliseconds).
+The above example will cause each simulation second to last 0.5 real seconds (or 500 milliseconds).  
 **For instantaneous execution, this value should be set to zero.**
 
 ---
