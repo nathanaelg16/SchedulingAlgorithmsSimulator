@@ -56,8 +56,7 @@ public class Driver {
 
         // Each scheduler should have their own list of tasks
         // since we change some of their values during execution
-        ArrayList<Task> RRTaskList = new ArrayList<>();
-        ArrayList<Task> SJFTaskList = new ArrayList<>();
+        ArrayList<Task> taskList = new ArrayList<>();
 
         String filename = args[0]; // input file name
         int timeQuantum = Integer.parseInt(args[1]); // time slice for RR
@@ -78,9 +77,8 @@ public class Driver {
                 if (arrivalTime < 0 || burstTime < 0) // Tasks should not have negative arrival or burst times
                     throw new IllegalArgumentException("Illegal Argument: Negative value received.");
 
-                // Create a Task object for each simulator
-                RRTaskList.add(new Task(PID, arrivalTime, burstTime));
-                SJFTaskList.add(new Task(PID, arrivalTime, burstTime));
+                // Create a Task object and insert into the task list
+                taskList.add(new Task(PID, arrivalTime, burstTime));
             }
         } catch (Exception e) { // Possible exceptions include FileNotFoundException and IllegalArgumentException
             System.err.println(e.getMessage());
@@ -89,8 +87,8 @@ public class Driver {
         }
 
         CPU cpu = new CPU();
-        simulateShortestJobFirst(cpu, SJFTaskList); // simulate SJF scheduler first
-        simulateRoundRobin(cpu, RRTaskList, timeQuantum); // simulate RR scheduler next
+        simulateShortestJobFirst(cpu, taskList); // simulate SJF scheduler first
+        simulateRoundRobin(cpu, taskList, timeQuantum); // simulate RR scheduler next
         System.out.println("\n------------------------------------------------\n\tProject done by Nathanael Gutierrez\n------------------------------------------------\n");
     }
 
@@ -135,6 +133,7 @@ public class Driver {
         } while (!scheduler.shouldExit() || !cpu.isIdle()); // repeat as long as scheduler has pending tasks or CPU is busy
         cpu.terminate();
         printStatistics(taskList);
+        taskList.forEach(Task::reset);
     }
 
     /**

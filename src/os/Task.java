@@ -121,4 +121,14 @@ public class Task {
     public boolean hasResponded() {
         return this.responded;
     }
+
+    /**
+     * Resets the task to its original state (the state before any execution).
+     */
+    public void reset() {
+        this.burstTimeRemaining = this.burstTime;
+        this.startTime = -1;
+        this.stopTime = -1;
+        this.responded = false;
+    }
 }
