@@ -5,6 +5,7 @@
 
 package os;
 
+import os.schedulers.FirstComeFirstServedScheduler;
 import os.schedulers.RoundRobinScheduler;
 import os.schedulers.Scheduler;
 import os.schedulers.ShortestJobFirstScheduler;
@@ -87,6 +88,7 @@ public class Driver {
         }
 
         CPU cpu = new CPU();
+        simulateFirstComeFirstServed(cpu, taskList);
         simulateShortestJobFirst(cpu, taskList); // simulate SJF scheduler first
         simulateRoundRobin(cpu, taskList, timeQuantum); // simulate RR scheduler next
         System.out.println("\n------------------------------------------------\n\tProject done by Nathanael Gutierrez\n------------------------------------------------\n");
@@ -147,6 +149,19 @@ public class Driver {
         System.out.println("\n------------------------------------------\n\tShortest Job First Scheduling\n------------------------------------------\n");
         ShortestJobFirstScheduler sjf = new ShortestJobFirstScheduler(cpu, taskList);
         simulateScheduler(cpu, taskList, sjf);
+    }
+
+    /**
+     * Inititates the simulation with a First Come First Served Scheduler
+     *
+     * @param cpu      CPU simulator
+     * @param taskList List of tasks being scheduled and executed
+     * @throws InterruptedException thrown by the simulator via the call to Thread.sleep()
+     */
+    private static void simulateFirstComeFirstServed(CPU cpu, ArrayList<Task> taskList) throws InterruptedException {
+        System.out.println("\n------------------------------------------\n\tFirst Come First Served Scheduling\n------------------------------------------\n");
+        FirstComeFirstServedScheduler fcfs = new FirstComeFirstServedScheduler(cpu, taskList);
+        simulateScheduler(cpu, taskList, fcfs);
     }
 
     /**
