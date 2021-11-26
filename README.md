@@ -48,4 +48,4 @@ The above example will cause each simulation second to last 0.5 real seconds (or
 
 ---
 ## Future Work
-In the future I plan to implement additional scheduling algorithms, such as Shortest Remaining Time First and Multilevel Feedback Queue.
+In the future I plan to implement additional scheduling algorithms, such as Multilevel Feedback Queue.
