@@ -5,10 +5,7 @@
 
 package os;
 
-import os.schedulers.FirstComeFirstServedScheduler;
-import os.schedulers.RoundRobinScheduler;
-import os.schedulers.Scheduler;
-import os.schedulers.ShortestJobFirstScheduler;
+import os.schedulers.*;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -89,8 +86,9 @@ public class Driver {
 
         CPU cpu = new CPU();
         simulateFirstComeFirstServed(cpu, taskList);
-        simulateShortestJobFirst(cpu, taskList); // simulate SJF scheduler first
-        simulateRoundRobin(cpu, taskList, timeQuantum); // simulate RR scheduler next
+        simulateShortestJobFirst(cpu, taskList);
+        simulateShortestRemainingTimeFirst(cpu, taskList);
+        simulateRoundRobin(cpu, taskList, timeQuantum);
         System.out.println("\n------------------------------------------------\n\tProject done by Nathanael Gutierrez\n------------------------------------------------\n");
     }
 
@@ -148,6 +146,19 @@ public class Driver {
     private static void simulateShortestJobFirst(CPU cpu, ArrayList<Task> taskList) throws InterruptedException {
         System.out.println("\n------------------------------------------\n\tShortest Job First Scheduling\n------------------------------------------\n");
         ShortestJobFirstScheduler sjf = new ShortestJobFirstScheduler(cpu, taskList);
+        simulateScheduler(cpu, taskList, sjf);
+    }
+
+    /**
+     * Initiates the simulation with a Shortest Remaining Time First Scheduler
+     *
+     * @param cpu      CPU simulator
+     * @param taskList List of tasks being scheduled and executed
+     * @throws InterruptedException thrown by the simulator via the call to Thread.sleep()
+     */
+    private static void simulateShortestRemainingTimeFirst(CPU cpu, ArrayList<Task> taskList) throws InterruptedException {
+        System.out.println("\n------------------------------------------\n\tShortest Remaining Time First Scheduling\n------------------------------------------\n");
+        ShortestRemainingTimeFirst sjf = new ShortestRemainingTimeFirst(cpu, taskList);
         simulateScheduler(cpu, taskList, sjf);
     }
 
